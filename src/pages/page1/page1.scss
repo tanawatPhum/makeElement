@@ -1,0 +1,21 @@
+
+page-page1 {
+    ion-segment {
+        justify-content: flex-start;
+        -webkit-justify-content: flex-start;
+        white-space: nowrap;
+        font-size: 0;
+        overflow: auto;    
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+        ion-segment-button.segment-button {
+            min-width: 33%;
+        }
+    }
+    .swiper-slide{
+        display: initial;
+    }
+}

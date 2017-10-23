@@ -1,0 +1,95 @@
+<!--
+  Generated template for the InputComponentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+  </ion-navbar>
+
+</ion-header>
+<ion-content #content>
+  <section radio-group [ngStyle]="{'background': bodyBind?.background}" style="min-height:100%;width:100%;padding:2vh">
+    <ion-segment mode="md" [(ngModel)]="currentTab" color="dark">
+      <ion-segment-button *ngFor="let tab of tabsBind?.tabs;let i = index" [value]="i" (click)="showContent(i)">
+        {{tab.tabName}}
+      </ion-segment-button>
+    </ion-segment>
+    <ion-slides>
+      <ion-slide *ngFor="let tab of tabsBind?.tabs">
+        <ion-grid *ngFor="let group of tab.groups">
+          <ion-title>
+            <p>{{group.groupName}}</p>
+          </ion-title>
+          <ion-row>
+            <ion-col *ngFor="let groupContent of group.contents" [attr.col-12]="forceOneColumn ? true : null" [attr.col-6]="!forceOneColumn ? true : null"
+              [attr.col-sm-6]="!forceOneColumn ? true : null" [attr.col-md-3]="!forceOneColumn ? true : null">
+              <ion-card style="width:100%;margin:auto" (click)="clickItem(tab,group,groupContent)">
+                <img style="height:auto" [src]="groupContent?.content?.url" />
+                <ion-card-content>
+                  <ion-card-title style="font-size:1.2em">
+                    <b>{{groupContent?.content?.title}}</b>
+                  </ion-card-title>
+                  <p>
+                    {{groupContent?.content?.description}}
+                  </p>
+                </ion-card-content>
+                <button ion-button [color]="data?.color" [outline]="data?.outline" *ngIf="groupContent?.content?.button">buy</button>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-slide>
+    </ion-slides>
+    <ion-title>
+      <p [ngStyle]="{'color': titleBind?.color}">{{titleBind?.text}}</p>
+    </ion-title>
+    <ion-grid *ngIf="data?.slide">
+      <ion-row>
+        <ion-col>
+          <ion-slides [zoom]="slideBind?.zoom" [pager]="slideBind?.pager" [loop]="slideBind?.loop">
+            <ion-slide *ngFor="let data of slideBind?.source">
+              <iframe *ngIf="data.inputType=='video'" width="100%" height="auto" [src]="data?.url | safeHtml:'resourceUrl'" frameborder="0"
+                allowfullscreen></iframe>
+              <img *ngIf="data?.inputType=='image'" style="width:100%;height:auto" [src]="data?.url | safeHtml:'url'">
+
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-item *ngFor="let data of inputBind;let i = index" style="background-color:transparent">
+      <ion-label *ngIf="data?.content.labelName&&data?.inputType!='spinnerNumber'" [color]="data?.styles.providers.labelColor">{{data.content.labelName}}</ion-label>
+      <ion-label *ngIf="data?.content.labelName&&data?.inputType=='spinnerNumber'" class="spinner-number-text" [color]="data?.styles.providers.labelColor">{{data.content.labelName}}</ion-label>
+      <ion-icon *ngIf="data?.styles.providers.icon" [name]="data?.styles.providers.icon" [ngStyle]="{'color': data?.styles.providers.iconColor}"
+        item-left></ion-icon>
+      <ion-input *ngIf="data?.inputType=='input'" [(ngModel)]="data?.content.value" [type]="data?.options.type" [placeholder]="data?.content.placeholder"
+        [ngStyle]="{'color': data?.styles.providers.color}"></ion-input>
+      <ion-checkbox *ngIf="data?.inputType=='checkbox'" [(ngModel)]="data?.content.value" [color]="data?.styles.providers.color"
+        item-left></ion-checkbox>
+      <!-- <ion-list radio-group [(ngModel)]="data?.content.value">
+          <ion-radio *ngIf="data?.inputType=='radio'" (ionChange)="updateRadio()" [value]="data?.content.value" [checked]="data?.options.checked" item-left></ion-radio>
+        </ion-list>  //ติด radio ไว้-->
+      <ion-select [okText]="data?.content.actionSheetButtonSumitName" [cancelText]="data?.content.actionSheetButtonCancelName"
+        *ngIf="data?.inputType=='select'" [(ngModel)]="data?.content.value" [multiple]="data?.options.actionSheetMutiValue"
+        [placeholder]="data?.content.placeholder">
+        <ion-option *ngFor="let value of data.content.actionSheetValue" [value]="value.name">{{value.name}}</ion-option>
+      </ion-select>
+      <ion-datetime *ngIf="data?.inputType=='dateTime'" [displayFormat]="data?.options.displayFormat" [(ngModel)]="data?.content.value"
+        [placeholder]="data?.content.placeholder"></ion-datetime>
+      <number-spinner (add-click)="data?.content.value=$event" (remove-click)="data?.content.value=$event" item-end *ngIf="data?.inputType=='spinnerNumber'"></number-spinner>
+    </ion-item>
+    <ion-grid style="margin-top:4vh">
+      <ion-row>
+        <ion-col style="margin:auto" col-6 *ngFor="let data of buttonBind;let i = index">
+          <button style="width:100%" ion-button [color]="data?.color" [outline]="data?.outline" (click)="submit(data.value)">{{data.content.name||data.content.value}}</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>
+<!-- <section>
+
+</section> -->

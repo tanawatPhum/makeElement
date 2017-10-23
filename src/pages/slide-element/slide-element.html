@@ -1,0 +1,16 @@
+<ion-grid *ngIf="data?.slide">
+    <ion-row>
+      <ion-col>
+        <ion-slides [zoom]="slideBind?.zoom" [pager]="slideBind?.pager" [loop]="slideBind?.loop">
+          <ion-slide *ngFor="let data of slideBind?.source">
+            <iframe *ngIf="data.inputType=='video'" width="100%" height="auto" [src]="data?.url | safeHtml:'resourceUrl'" frameborder="0"
+              allowfullscreen></iframe>
+            <img *ngIf="data?.inputType=='image'" style="width:100%;height:auto" [src]="data?.url | safeHtml:'url'">
+
+
+            
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+</ion-grid>
